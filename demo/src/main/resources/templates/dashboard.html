@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Login Page</title>
+    <link rel="stylesheet" th:href="@{/styles.css}" />
+</head>
+<body>
+    <div class="container">
+        <h2>DashBoard</h2>
+
+        <!-- Display the error message if it exists -->
+        <div th:if="${username}" th:text="Benvenuto ${username}"></div>
+    
+    </div>
+</body>
+</html>
