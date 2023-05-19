@@ -9,6 +9,7 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.view.RedirectView;
 
 import edu.itispaleocapa.mastroiannim.services.LoginService;
+import jakarta.servlet.http.HttpSession;
 
 @RestController
 public class LoginController {
@@ -21,7 +22,7 @@ public class LoginController {
     }
 
     @PostMapping(value = "/login", consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
-    public ModelAndView login(@ModelAttribute("loginForm") LoginForm loginForm) {
+    public ModelAndView login(@ModelAttribute("loginForm") LoginForm loginForm,  HttpSession session) {
         
         ModelAndView modelAndView = new ModelAndView();
 
@@ -31,13 +32,17 @@ public class LoginController {
         boolean loginSuccessful = loginService.authenticate(loginForm.getUsername(), loginForm.getPassword());
 
         if (loginSuccessful) {
+
+            //save in session
+            session.setAttribute("loginForm", loginForm);
+
             // Redirect to a different URL on successful login
-            RedirectView redirectView = new RedirectView("/dashboard");
+            RedirectView redirectView = new RedirectView("dashboard");
             modelAndView.setView(redirectView);
-            modelAndView.addObject("username", loginForm.getUsername());
+
         } else {
             // Add an error message to the model and return the login template
-            modelAndView.setViewName("index");  // Replace "login" with the name of your login template
+            modelAndView.setViewName("index");  // the name of your login template
             modelAndView.addObject("errorMessage", "Invalid credentials");
         }
 

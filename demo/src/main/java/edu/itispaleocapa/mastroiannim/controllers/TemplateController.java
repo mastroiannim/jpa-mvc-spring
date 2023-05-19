@@ -5,6 +5,8 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.servlet.ModelAndView;
+import edu.itispaleocapa.mastroiannim.controllers.api.LoginController;
+import jakarta.servlet.http.HttpServletRequest;
 
 @Controller
 public class TemplateController {
@@ -18,14 +20,18 @@ public class TemplateController {
     }
 
     @GetMapping("/dashboard")
-    public ModelAndView dashboard(ModelAndView modelAndView) {
-        // Get the username parameter from the ModelAndView
-        String username = (String) modelAndView.getModel().get("username");
-
-        LOG.info(username);
+    public ModelAndView dashboard(HttpServletRequest request) {   
         // Add any additional logic or data retrieval for the dashboard
+                
+        ModelAndView modelAndView = new ModelAndView();
+        modelAndView.setViewName("dashboard");
+       
+        LoginController.LoginForm loginForm = (LoginController.LoginForm) request.getSession().getAttribute("loginForm");
+        modelAndView.addObject("username", loginForm.getUsername());
 
-        // Return the ModelAndView
+        LOG.info(loginForm.getUsername());
+        // Create the ModelAndView object with the result view and form model
         return modelAndView;
     }
+
 }

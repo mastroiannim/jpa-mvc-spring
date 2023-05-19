@@ -9,7 +9,10 @@
         <h2>DashBoard</h2>
 
         <!-- Display the error message if it exists -->
-        <div th:if="${username}" th:text="Benvenuto ${username}"></div>
+        <div th:if="${username}">
+            <p>Benvenuto <span th:text="${username}"></span></p>
+
+        </div>
     
     </div>
 </body>
