@@ -1,5 +1,7 @@
 package edu.itispaleocapa.mastroiannim.controllers;
 
+import java.util.List;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
@@ -9,13 +11,22 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.view.RedirectView;
 
 import edu.itispaleocapa.mastroiannim.controllers.api.LoginController;
+import edu.itispaleocapa.mastroiannim.entity.Chat;
+import edu.itispaleocapa.mastroiannim.services.ChatService;
+import edu.itispaleocapa.mastroiannim.services.UsersService;
 import jakarta.servlet.http.HttpSession;
 
 @Controller
 public class TemplateController {
         
     private static final Logger LOG = LoggerFactory.getLogger(TemplateController.class);
+    private final ChatService chatService;
+    private final UsersService usersService;
 
+    public TemplateController(ChatService chatService, UsersService usersService) {
+        this.chatService = chatService;
+        this.usersService = usersService;
+    }
 
     @GetMapping("/")
     public ModelAndView index(@ModelAttribute("errorMessage") String errorMessage, HttpSession session){
@@ -45,6 +56,10 @@ public class TemplateController {
             modelAndView.setViewName("dashboard");
             modelAndView.addObject("username", loginForm.getUsername());
             LOG.info(loginForm.getUsername());
+            List<Chat> chats = chatService.getChatsByUsername(loginForm.getUsername());
+            modelAndView.addObject("chats", chats);
+            LOG.info(chats.toString());
+            
         }else{
             RedirectView redirectView = new RedirectView("");
             modelAndView.setView(redirectView);     

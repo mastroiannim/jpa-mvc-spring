@@ -15,6 +15,9 @@ import edu.itispaleocapa.mastroiannim.entity.ChatUserId;
 public interface ChatUserRepository extends JpaRepository<ChatUser, ChatUserId> {
     @Query("SELECT cu.chat FROM ChatUser cu WHERE cu.user.id = :userId")
     List<Chat> findChatsByUserId(@Param("userId") Long userId);
+
+    @Query("SELECT cu.chat FROM ChatUser cu WHERE cu.user.username = :username")
+    List<Chat> findChatsByUsername(@Param("username") String username);
 }
 
 

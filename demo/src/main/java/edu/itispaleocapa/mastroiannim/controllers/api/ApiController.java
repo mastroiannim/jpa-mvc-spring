@@ -25,7 +25,6 @@ public class ApiController {
         this.chatService = chatService;
         this.objectMapper = objectMapper;
         this.objectMapper.setSerializationInclusion(JsonInclude.Include.NON_NULL);
-
     }
 
     

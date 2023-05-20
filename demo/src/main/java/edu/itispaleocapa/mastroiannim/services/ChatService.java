@@ -18,4 +18,8 @@ public class ChatService {
     public List<Chat> getChatsByUserId(Long userId) {
         return chatUserRepository.findChatsByUserId(userId);
     }
+
+    public List<Chat> getChatsByUsername(String username) {
+        return chatUserRepository.findChatsByUsername(username);
+    }
 }

@@ -11,7 +11,11 @@
         <!-- Display the error message if it exists -->
         <div th:if="${username}">
             <p>Benvenuto <span th:text="${username}"></span></p>
+            <p><a href="/login">Logout</a></p>
 
+            <ul>
+                <li th:each="chat : ${chats}" th:text="${chat.name}"></li>
+            </ul>
         </div>
     
     </div>
