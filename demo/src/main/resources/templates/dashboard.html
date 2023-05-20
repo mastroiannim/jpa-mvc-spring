@@ -14,7 +14,9 @@
             <p><a href="/login">Logout</a></p>
 
             <ul>
-                <li th:each="chat : ${chats}" th:text="${chat.name}"></li>
+                <li th:each="chat : ${chats}">
+                    <a th:href="@{'api/chat/' + ${chat.id} + '/message'}"> <span th:text="${chat.name}"></span> </a>
+                </li>
             </ul>
         </div>
     

@@ -13,7 +13,6 @@ import org.springframework.web.servlet.view.RedirectView;
 import edu.itispaleocapa.mastroiannim.controllers.api.LoginController;
 import edu.itispaleocapa.mastroiannim.entity.Chat;
 import edu.itispaleocapa.mastroiannim.services.ChatService;
-import edu.itispaleocapa.mastroiannim.services.UsersService;
 import jakarta.servlet.http.HttpSession;
 
 @Controller
@@ -21,11 +20,9 @@ public class TemplateController {
         
     private static final Logger LOG = LoggerFactory.getLogger(TemplateController.class);
     private final ChatService chatService;
-    private final UsersService usersService;
 
-    public TemplateController(ChatService chatService, UsersService usersService) {
+    public TemplateController(ChatService chatService) {
         this.chatService = chatService;
-        this.usersService = usersService;
     }
 
     @GetMapping("/")
