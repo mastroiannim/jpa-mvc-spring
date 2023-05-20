@@ -21,6 +21,7 @@ public class UsersService {
     }
 
     public List<User> getUsers() {
+        LOG.info("getUsers()");
         return userRepository.findAll();
     }
 
