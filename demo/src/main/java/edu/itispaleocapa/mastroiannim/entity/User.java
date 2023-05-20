@@ -12,7 +12,18 @@ public class User {
     private Long id;
     private String username;
     private String password;
+
+    public User() {
+        //default constructor
+    }
     
+    public User(User user) {
+        //copy constructor
+        this.id = user.getId(); 
+        this.username = user.getUsername();
+        this.password = user.getPassword();
+    }
+
     public void setPassword(String password) {
         this.password = password;
     }

@@ -9,7 +9,7 @@ CREATE TABLE IF NOT EXISTS chat (
   name VARCHAR(50) NOT NULL
 );
 
-CREATE TABLE IF NOT EXISTS joined (
+CREATE TABLE IF NOT EXISTS chat_user (
   chat_id INT NOT NULL,
   user_id INT NOT NULL,
   FOREIGN KEY (chat_id) REFERENCES chat(id),
@@ -48,7 +48,7 @@ INSERT INTO message (id, chat_id, sender_id, content, sent_at) VALUES
   (5, 3, 2, 'Ci vediamo stasera!', '2023-05-18 12:00:00');
 
 -- Inserimento dati nella tabella "joined"
-INSERT INTO joined (chat_id, user_id) VALUES
+INSERT INTO chat_user (chat_id, user_id) VALUES
   (1, 1),
   (1, 2),
   (2, 1),
