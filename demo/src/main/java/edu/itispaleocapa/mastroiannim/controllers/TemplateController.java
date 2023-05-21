@@ -8,6 +8,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.view.RedirectView;
 
@@ -16,6 +17,9 @@ import edu.itispaleocapa.mastroiannim.entity.Chat;
 import edu.itispaleocapa.mastroiannim.services.ChatService;
 import edu.itispaleocapa.mastroiannim.services.MessageService;
 import jakarta.servlet.http.HttpSession;
+
+import org.springframework.http.MediaType;
+
 
 @Controller
 public class TemplateController {
@@ -81,6 +85,24 @@ public class TemplateController {
             modelAndView.addObject("chatId", chatId);
 
 
+        }else{
+            RedirectView redirectView = new RedirectView("");
+            modelAndView.setView(redirectView);     
+        }
+        return modelAndView;
+    }
+
+    @PostMapping(value = "/chat/{id}/message", consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
+    public ModelAndView postChatMessage(@PathVariable("id") Long chatId, @ModelAttribute("content") String message, HttpSession session) {
+        // Use the chatId and message as needed
+        ModelAndView modelAndView = new ModelAndView();
+        LoginController.LoginForm loginForm = (LoginController.LoginForm) session.getAttribute("loginForm");
+        if(loginForm != null){
+            RedirectView redirectView = new RedirectView("/chat/"+chatId+"/message");
+            modelAndView.setView(redirectView);
+            //modelAndView.setViewName("chat");
+            modelAndView.addObject("messages", messageService.getMessagesByChatId(chatId));
+            messageService.saveMessage(message, chatId, loginForm.getUsername());
         }else{
             RedirectView redirectView = new RedirectView("");
             modelAndView.setView(redirectView);     

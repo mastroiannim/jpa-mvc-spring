@@ -21,9 +21,9 @@
                 </li>
             </ul>
             <div class="form">
-                <form method="POST" th:action="@{'chat/'+ ${chatId} + '/message'}">
+                <form method="POST" th:action="@{'/chat/'+ ${chatId} + '/message'}">
                     <div class="form-group">
-                        <input type="text" name="content" placeholder="Scrivi un messaggio" />
+                        <input type="text" id="content" name="content" placeholder="Scrivi un messaggio" />
                     </div>
                     <div class="form-group">
                         <button type="submit">Invia</button>

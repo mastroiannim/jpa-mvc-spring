@@ -28,6 +28,9 @@ public class Message {
     private String content;
     private String sent_at;
 
+	private Long chat_id;
+	private Long sender_id;
+
     public Message() {
         //default constructor
     }
@@ -77,4 +80,21 @@ public class Message {
 		this.sender = sender;
 	}
 
+	public Long getChat_id() {
+		return chat_id;
+	}
+
+	public void setChat_id(Long chat_id) {
+		this.chat_id = chat_id;
+	}
+
+	public Long getSender_id() {
+		return sender_id;
+	}
+
+	public void setSender_id(Long sender_id) {
+		this.sender_id = sender_id;
+	}
+
+	
 }
