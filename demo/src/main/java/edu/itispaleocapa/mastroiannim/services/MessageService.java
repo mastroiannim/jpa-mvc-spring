@@ -5,7 +5,6 @@ import java.util.List;
 import org.springframework.stereotype.Service;
 
 import edu.itispaleocapa.mastroiannim.entity.Message;
-import edu.itispaleocapa.mastroiannim.repository.ChatReposiotory;
 import edu.itispaleocapa.mastroiannim.repository.MessageRepository;
 import edu.itispaleocapa.mastroiannim.repository.UserRepository;
 
