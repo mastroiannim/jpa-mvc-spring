@@ -7,12 +7,14 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.view.RedirectView;
 
 import edu.itispaleocapa.mastroiannim.controllers.api.LoginController;
 import edu.itispaleocapa.mastroiannim.entity.Chat;
 import edu.itispaleocapa.mastroiannim.services.ChatService;
+import edu.itispaleocapa.mastroiannim.services.MessageService;
 import jakarta.servlet.http.HttpSession;
 
 @Controller
@@ -20,9 +22,11 @@ public class TemplateController {
         
     private static final Logger LOG = LoggerFactory.getLogger(TemplateController.class);
     private final ChatService chatService;
+    private final MessageService messageService;
 
-    public TemplateController(ChatService chatService) {
+    public TemplateController(ChatService chatService, MessageService messageService) {
         this.chatService = chatService;
+        this.messageService = messageService;
     }
 
     @GetMapping("/")
@@ -62,6 +66,25 @@ public class TemplateController {
             modelAndView.setView(redirectView);     
         }
         // Create the ModelAndView object with the result view and form model
+        return modelAndView;
+    }
+
+    @GetMapping("/chat/{id}/message")
+    public ModelAndView getChatMessages(@PathVariable("id") Long chatId, HttpSession session) {
+        // Use the chatId as needed
+        ModelAndView modelAndView = new ModelAndView();
+        LoginController.LoginForm loginForm = (LoginController.LoginForm) session.getAttribute("loginForm");
+        if(loginForm != null){
+            modelAndView.addObject("username", loginForm.getUsername());
+            modelAndView.setViewName("chat");
+            modelAndView.addObject("messages", messageService.getMessagesByChatId(chatId));
+            modelAndView.addObject("chatId", chatId);
+
+
+        }else{
+            RedirectView redirectView = new RedirectView("");
+            modelAndView.setView(redirectView);     
+        }
         return modelAndView;
     }
 

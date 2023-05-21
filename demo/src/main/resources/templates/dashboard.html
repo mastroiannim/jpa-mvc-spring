@@ -15,7 +15,7 @@
 
             <ul>
                 <li th:each="chat : ${chats}">
-                    <a th:href="@{'api/chat/' + ${chat.id} + '/message'}"> <span th:text="${chat.name}"></span> </a>
+                    <a th:href="@{'chat/' + ${chat.id} + '/message'}"> <span th:text="${chat.name}"></span> </a>
                 </li>
             </ul>
         </div>

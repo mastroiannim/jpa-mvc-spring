@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Login Page</title>
+    <link rel="stylesheet" th:href="@{/styles.css}" />
+</head>
+<body>
+    <div class="container">
+        <h2>Chat</h2>
+
+        <div th:if="${username}">
+            <p>Benvenuto <span th:text="${username}"></span></p>
+            <p><a href="/login">Logout</a></p>
+        
+            <ul class="no-bullets">
+                <li th:each="msg : ${messages}">
+                    <div th:class="${msg.sender.username} == ${username} ? 'msg right' : 'msg'"> 
+                        <span th:if="${msg.sender.username != username}" th:class="sender" th:text="@{${msg.sender.username + ':'}}"></span> 
+                        <span th:class="content" th:text="${msg.content}"></span> 
+                    </div>
+                </li>
+            </ul>
+            <div class="form">
+                <form method="POST" th:action="@{'chat/'+ ${chatId} + '/message'}">
+                    <div class="form-group">
+                        <input type="text" name="content" placeholder="Scrivi un messaggio" />
+                    </div>
+                    <div class="form-group">
+                        <button type="submit">Invia</button>
+                    </div>
+                </form>
+            </div>
+    </div>
+</body>
+</html>
