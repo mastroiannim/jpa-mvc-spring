@@ -14,11 +14,13 @@ import org.springframework.web.servlet.view.RedirectView;
 
 import edu.itispaleocapa.mastroiannim.controllers.api.LoginController;
 import edu.itispaleocapa.mastroiannim.entity.Chat;
+import edu.itispaleocapa.mastroiannim.entity.Message;
 import edu.itispaleocapa.mastroiannim.services.ChatService;
 import edu.itispaleocapa.mastroiannim.services.MessageService;
 import jakarta.servlet.http.HttpSession;
 
 import org.springframework.http.MediaType;
+//import org.springframework.messaging.handler.annotation.SendTo;
 
 
 @Controller
@@ -41,7 +43,7 @@ public class TemplateController {
 
         LoginController.LoginForm loginForm = (LoginController.LoginForm) session.getAttribute("loginForm");
         if(loginForm != null){
-            RedirectView redirectView = new RedirectView("dashboard");
+            RedirectView redirectView = new RedirectView("/dashboard");
             modelAndView.setView(redirectView);            
             LOG.info(loginForm.getUsername());
         }else{
@@ -66,7 +68,7 @@ public class TemplateController {
             LOG.info(chats.toString());
             
         }else{
-            RedirectView redirectView = new RedirectView("");
+            RedirectView redirectView = new RedirectView("/");
             modelAndView.setView(redirectView);     
         }
         // Create the ModelAndView object with the result view and form model
@@ -86,12 +88,13 @@ public class TemplateController {
 
 
         }else{
-            RedirectView redirectView = new RedirectView("");
+            RedirectView redirectView = new RedirectView("/");
             modelAndView.setView(redirectView);     
         }
         return modelAndView;
     }
 
+    //@SendTo("/topic/messages")
     @PostMapping(value = "/chat/{id}/message", consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
     public ModelAndView postChatMessage(@PathVariable("id") Long chatId, @ModelAttribute("content") String message, HttpSession session) {
         // Use the chatId and message as needed
@@ -102,9 +105,10 @@ public class TemplateController {
             modelAndView.setView(redirectView);
             //modelAndView.setViewName("chat");
             modelAndView.addObject("messages", messageService.getMessagesByChatId(chatId));
-            messageService.saveMessage(message, chatId, loginForm.getUsername());
+            Message newMsg = messageService.saveMessage(message, chatId, loginForm.getUsername());
+            modelAndView.addObject("message", newMsg);
         }else{
-            RedirectView redirectView = new RedirectView("");
+            RedirectView redirectView = new RedirectView("/");
             modelAndView.setView(redirectView);     
         }
         return modelAndView;

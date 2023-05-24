@@ -22,11 +22,12 @@ public class MessageService {
         return messageRepository.findByChat_Id(chatId);
     }
 
-    public void saveMessage(String message, Long chatId, String username) {
+    public Message saveMessage(String message, Long chatId, String username) {
         Message newMessage = new Message();
         newMessage.setContent(message);
         newMessage.setChat_id(chatId);;
         newMessage.setSender_id(userRepository.findByUsername(username).getId());
         messageRepository.save(newMessage);
+        return newMessage;
     }
 }

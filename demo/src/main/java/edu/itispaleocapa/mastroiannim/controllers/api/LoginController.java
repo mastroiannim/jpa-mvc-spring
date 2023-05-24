@@ -29,7 +29,7 @@ public class LoginController {
     @GetMapping(value = "/login")
     public ModelAndView logout (HttpSession session){
         ModelAndView modelAndView = new ModelAndView();
-        RedirectView redirectView = new RedirectView("");
+        RedirectView redirectView = new RedirectView("/");
         session.invalidate();
         modelAndView.setView(redirectView);
         return modelAndView;
@@ -50,12 +50,12 @@ public class LoginController {
             //save in session
             session.setAttribute("loginForm", loginForm);
             // Redirect to a different URL on successful login
-            RedirectView redirectView = new RedirectView("dashboard");
+            RedirectView redirectView = new RedirectView("/dashboard");
             modelAndView.setView(redirectView);
 
         } else {
             // Add an error message to the model and return the login template
-            RedirectView redirectView = new RedirectView("");
+            RedirectView redirectView = new RedirectView("/");
             modelAndView.setView(redirectView);
             //modelAndView.setViewName("index");  // the name of your login template
             modelAndView.addObject("errorMessage", "Invalid credentials");
